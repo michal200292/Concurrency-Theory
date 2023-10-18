@@ -40,23 +40,24 @@ class RNG{
 class Buffer{
     private int count;
 
+    private static int pizzaId = 0;
     private int maxCapacity;
 
-    List<Integer> queue = new LinkedList<>();
+    List<Pair<Integer, Integer>> queue = new LinkedList<>();
     Buffer(int maxCapacity){
         this.count = 0;
         this.maxCapacity = maxCapacity;
     }
 
-    public int get(int threadId) throws InterruptedException {
-        int x;
+    public Pair get(int threadId) throws InterruptedException {
+        Pair x;
         synchronized (this){
             while(count <= 0){
                 wait();
             }
             count -= 1;
             x = this.queue.removeFirst();
-            System.out.println("Thread number: " + threadId + ", got pizza from thread: " + x);
+            System.out.println("Thread number: " + threadId + ", got pizza from thread: " + x.getL() + ", pizza id: " + x.getR());
             notify();
         }
         return x;
@@ -67,12 +68,28 @@ class Buffer{
             while(count >= maxCapacity){
                 wait();
             }
-            this.queue.add(threadID);
             count += 1;
-            System.out.println("Thread number: " + threadID + ", put pizza, number of pizzas: " + queue.size());
+            pizzaId++;
+            this.queue.add(new Pair(threadID, pizzaId));
+            System.out.println("Thread number: " + threadID + ", put pizza, pizza id: " + pizzaId);
             notify();
         }
     }
+}
+
+class Pair<L,R> {
+    private L l;
+    private R r;
+    public Pair(L l, R r){
+        this.l = l;
+        this.r = r;
+    }
+    public L getL(){
+        return l;
+    }
+    public R getR(){ return r; }
+    public void setL(L l){ this.l = l; }
+    public void setR(R r){ this.r = r; }
 }
 
 class Prod implements Runnable{
@@ -109,7 +126,7 @@ class Cons implements Runnable{
         this.id = id;
     }
     public void run(){
-        int x;
+        Pair x;
         while(true){
             try {
                 Thread.sleep(RNG.randInt(500, 2000));
