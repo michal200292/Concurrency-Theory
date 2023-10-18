@@ -13,7 +13,7 @@ public class Zad5a {
         MainCommittee mainCommittee = new MainCommittee(10);
         ExecutorService exec = Executors.newCachedThreadPool();
         for(int i = 0; i < 10; i++){
-            Committee committee = new Committee(mainCommittee, (i+1)*100);
+            Committee committee = new Committee(mainCommittee, (i+1)*100, 100);
             Thread thread = new Thread(committee);
             exec.execute(thread);
         }
@@ -26,18 +26,36 @@ class Committee implements Runnable{
 
     static Random rand = new Random();
     private int votes;
+
+    private int[] partyVotes = new int[10];
+    private final int step;
+
     MainCommittee mainCommittee;
-    Committee(MainCommittee mainCommittee, int votes){
+    Committee(MainCommittee mainCommittee, int votes, int step){
+        for(int i = 0; i < 10; i++){
+            partyVotes[i] = 0;
+        }
         this.mainCommittee = mainCommittee;
         this.votes = votes;
+        this.step = step;
     }
 
     @Override
     public void run() {
+        int votes_so_far=0;
         for(int i = 0; i < this.votes; i++){
             int int_random = rand.nextInt(10);
-            mainCommittee.increaseVotes(int_random);
+            partyVotes[int_random]++;
+            votes_so_far++;
+            if(votes_so_far >= this.step){
+                mainCommittee.increaseVotes(partyVotes);
+                votes_so_far=0;
+                for(int j = 0; j < 10; j++){
+                    partyVotes[j] = 0;
+                }
+            }
         }
+        mainCommittee.increaseVotes(partyVotes);
         mainCommittee.printCurrentVotes();
     }
 }
@@ -53,8 +71,11 @@ class MainCommittee{
         }
     }
 
-    synchronized public void increaseVotes(int id){
-        parties.get(id).increaseCount();
+    synchronized public void increaseVotes(int[] partyVotes){
+        for(int i = 0; i < 10; i++){
+            parties.get(i).increaseCount(partyVotes[i]);
+        }
+
     }
 
     synchronized public void printCurrentVotes(){
@@ -74,8 +95,8 @@ class Party{
         this.partyId = id;
     }
 
-    public void increaseCount(){
-        this.voteCount++;
+    public void increaseCount(int increase){
+        this.voteCount += increase;
     }
 
     @Override
