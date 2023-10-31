@@ -11,7 +11,7 @@ public class Zad1 {
 
         int noOfPhilosophers = 5;
 
-        Arbiter arbiter = new Arbiter(noOfPhilosophers);
+        Arbiter arbiter = new Arbiter(noOfPhilosophers - 1);
         List<Fork> forks = new ArrayList<>();
         for(int i = 1; i <= noOfPhilosophers ; i ++){
             forks.add(new Fork(i));
