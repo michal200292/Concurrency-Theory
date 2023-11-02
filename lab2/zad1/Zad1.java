@@ -1,4 +1,4 @@
-package lab2;
+package lab2.zad1;
 
 
 import java.util.*;

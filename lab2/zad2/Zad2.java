@@ -1,4 +1,4 @@
-package lab2;
+package lab2.zad2;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
