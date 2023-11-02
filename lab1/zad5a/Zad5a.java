@@ -1,6 +1,6 @@
 // Committees count votes and update global vote count
 
-package lab1;
+package lab1.zad5a;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package lab1;
-
 // Program that is supposed to encounter deadlock
+
+package lab1.zad4;
 
 public class Zad4{
 

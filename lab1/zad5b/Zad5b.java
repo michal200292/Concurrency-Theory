@@ -1,6 +1,6 @@
 // Simulating multithreaded Bingo game. Without using wait and notify.
 
-package lab1;
+package lab1.zad5b;
 
 import java.util.ArrayList;
 import java.util.Arrays;

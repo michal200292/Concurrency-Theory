@@ -1,6 +1,6 @@
 // Incrementing global variable
 
-package lab1;
+package lab1.zad2;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -1,6 +1,6 @@
 //Checking atomicity of string assignment operation
 
-package lab1;
+package lab1.zad3;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

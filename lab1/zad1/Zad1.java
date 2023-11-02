@@ -3,7 +3,7 @@
 // and all stop if only one finishes counting
 
 
-package lab1;
+package lab1.zad1;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
