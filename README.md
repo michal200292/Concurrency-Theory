@@ -1,2 +1,2 @@
-# Concurrency
-Excercises done for my concurrency course
+# Concurrency theory
+Excercises done for my concurrency theory course
