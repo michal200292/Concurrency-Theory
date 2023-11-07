@@ -1,31 +1,28 @@
 package org.task;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 
 abstract public class Philosopher implements Runnable{
 
     public int id;
-    public Fork leftFork;
-    public Fork rightFork;
+    public final Fork leftFork;
+    public final Fork rightFork;
     public int waitTime;
-    public boolean testing;
-    public Arbiter arbiter;
+    public final Semaphore sem;
     public CountDownLatch latch;
 
     public List<Long> time;
 
     Philosopher(int id, Fork leftFork, Fork rightFork, int waitTime,
-                boolean testing, Arbiter arbiter, CountDownLatch latch){
+                Semaphore sem, CountDownLatch latch){
         this.id = id;
         this.leftFork = leftFork;
         this.rightFork = rightFork;
         this.waitTime = waitTime;
-        this.testing = testing;
-        this.arbiter = arbiter;
+        this.sem = sem;
         this.latch = latch;
         this.time =  new ArrayList<>();
     }
@@ -48,11 +45,8 @@ abstract public class Philosopher implements Runnable{
     public void run() {
         long t1, t2;
         for(int i = 0; i < 100; i++){
-//            if(arbiter.isFinished()){
-//                latch.countDown();
-//                return;
-//            }
-//            sleep(waitTime);
+            sleep(waitTime);
+            if(id == 1) System.out.println(i);
             t1 = System.nanoTime();
             try {
                 takeForks();
@@ -60,11 +54,10 @@ abstract public class Philosopher implements Runnable{
                 throw new RuntimeException(e);
             }
             t2 = System.nanoTime();
-            putForks();
-//            sleep(waitTime);
             time.add(t2 - t1);
+            sleep(waitTime);
+            putForks();
         }
-//        arbiter.finishSimulation();
         latch.countDown();
     }
 

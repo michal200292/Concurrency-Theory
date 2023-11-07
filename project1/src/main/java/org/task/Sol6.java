@@ -1,15 +1,17 @@
 package org.task;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 
 public class Sol6 extends Philosopher{
-    Sol6(int id, Fork leftFork, Fork rightFork, int waitTime, boolean testing, Arbiter arbiter, CountDownLatch latch) {
-        super(id, leftFork, rightFork, waitTime, testing, arbiter, latch);
+
+    Sol6(int id, Fork leftFork, Fork rightFork, int waitTime, Semaphore sem, CountDownLatch latch) {
+        super(id, leftFork, rightFork, waitTime, sem, latch);
     }
 
     @Override
     public void takeForks(){
-        if(arbiter.sem.tryAcquire()){
+        if(sem.tryAcquire()){
             this.leftFork.lock.lock();
             this.rightFork.lock.lock();
         }
@@ -17,6 +19,6 @@ public class Sol6 extends Philosopher{
             this.rightFork.lock.lock();
             this.leftFork.lock.lock();
         }
-        arbiter.sem.release();
+        sem.release();
     }
 }
