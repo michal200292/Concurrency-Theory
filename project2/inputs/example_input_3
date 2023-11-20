@@ -1,0 +1,10 @@
+(a) x := x + y + w + z + u
+(b) y := 3y + 2z
+(c) x := 3x + z
+(d) w := w + v
+(e) z := y − z
+(f) v := x + v + w
+(g) v := u + v + y
+(h) u := x + y + u + x * y - z
+A = {a, b, c, d, e, f, g, h}
+w = acaddefghedcbafgcfbbe

@@ -1,0 +1,10 @@
+(a) x := x + y + u + r + w
+(b) y := y + x
+(c) z := z + 5
+(d) w := sqrt(w)
+(e) v := u + t
+(f) u := r * u
+(g) t := t / t
+(h) r := u * r
+A = {a, b, c, d, e, f, g, h}
+w = afgdcebadefghdgfhgcdh
